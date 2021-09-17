@@ -11,6 +11,8 @@ class FavoriteListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    private let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
+    private var favorites = [Recipe]()
     private var segueIdentifier = "RecipeDetail"
     private var cellIdentifier = "RecipeCell"
     
@@ -23,7 +25,14 @@ class FavoriteListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        loadFavorites()
+    }
+    
+    private func loadFavorites() {
+        dbHelper.getAllRecipes { recipes in
+            self.favorites = recipes
+            tableView.reloadData()
+        }
     }
 }
 
@@ -47,7 +56,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Favorite.shared.recipes.count
+        return favorites.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,14 +64,13 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
             return UITableViewCell()
         }
         
-        let recipe = Favorite.shared.recipes[indexPath.row]
+        let recipe = favorites[indexPath.row]
         cell.configure(recipe: recipe)
-        cell.addShadow(width: self.view.frame.width)
-        
+        cell.loadImage(from: favorites[indexPath.row]) { _ in }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: segueIdentifier, sender: Favorite.shared.recipes[indexPath.row])
+        performSegue(withIdentifier: segueIdentifier, sender: favorites[indexPath.row])
     }
 }

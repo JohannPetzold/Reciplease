@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Alamofire
 
 class RecipeListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     var ingredients: [String]!
+    private var service = APIService(session: AF)
+    private var recipes = [Recipe]()
     private var segueIdentifier = "RecipeDetail"
     private var cellIdentifier = "RecipeCell"
     
@@ -21,12 +24,33 @@ class RecipeListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        // TODO: Compare ingredients with recipes ingredients
+        getRecipesFromIngredients()
+    }
+}
+
+// MARK: - Recipes
+extension RecipeListViewController {
+    
+    private func getRecipesFromIngredients() {
+        if ingredients.count > 0 {
+            service.fetchRecipes(with: ingredients) { result in
+                if let newRecipes = result {
+                    self.recipes = newRecipes
+                    self.tableView.reloadData()
+                } else {
+                    // TODO: Display empty list message
+                }
+            }
+        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
+//    private func compareIngredientsWithRecipes() {
+//        for recipe in Recipe.recipeList {
+//            if recipe.canBeCook(with: ingredients) {
+//                recipes.append(recipe)
+//            }
+//        }
+//    }
 }
 
 // MARK: - Navigation
@@ -49,7 +73,7 @@ extension RecipeListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Recipe.recipeList.count
+        return recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,14 +81,18 @@ extension RecipeListViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         
-        let recipe = Recipe.recipeList[indexPath.row]
+        let recipe = recipes[indexPath.row]
         cell.configure(recipe: recipe)
-        cell.addShadow(width: self.view.frame.width)
-        
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
+        cell.loadImage(from: recipes[indexPath.row]) { imageData in
+            if let data = imageData {
+                self.recipes[indexPath.row].imageData = data
+            }
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: segueIdentifier, sender: Recipe.recipeList[indexPath.row])
+        performSegue(withIdentifier: segueIdentifier, sender: recipes[indexPath.row])
     }
 }

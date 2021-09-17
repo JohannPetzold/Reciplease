@@ -12,7 +12,7 @@ extension Int {
     // Display self in hour and min
     func getStringTime() -> String {
         var time = ""
-        if self / 60 > 1 {
+        if self / 60 > 0 {
             let hour = self / 60
             time += "\(hour)h"
         }

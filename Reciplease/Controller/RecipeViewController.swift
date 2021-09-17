@@ -17,13 +17,17 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
     var recipe: Recipe!
+    let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
     private var cellIdentifier = "IngredientCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configure()
     }
     
@@ -31,9 +35,13 @@ class RecipeViewController: UIViewController {
         titleLabel.text = recipe.title
         likeLabel.text = "\(recipe.score)"
         durationLabel.text = recipe.preparationTime.getStringTime()
-        recipeImage.image = recipe.image
+        if let data = recipe.imageData {
+            recipeImage.image = UIImage(data: data)
+        }
         recipeImage.addShadowGradient(width: self.view.bounds.width, height: self.view.bounds.width / 2)
-        modifyFavoriteButton()
+        dbHelper.isInDatabase(recipe: recipe, completion: { result in
+            modifyFavoriteButton(isOn: result)
+        })
     }
 }
 
@@ -45,22 +53,26 @@ extension RecipeViewController {
     }
     
     private func manageFavorite() {
-        if Favorite.shared.recipes.contains(where: { tabRecipe in
-            tabRecipe.title == recipe.title
-        }) {
-            Favorite.shared.recipes.removeAll { tabRecipe in
-                tabRecipe.title == recipe.title
+        dbHelper.isInDatabase(recipe: recipe, completion: { result in
+            modifyFavoriteButton(isOn: !result)
+            if result {
+                dbHelper.deleteRecipe(recipe: recipe) { success in
+                    if !success {
+                        // TODO: Display error message
+                    }
+                }
+            } else {
+                dbHelper.saveRecipe(recipe: recipe) { success in
+                    if !success {
+                        // TODO: Display error message
+                    }
+                }
             }
-        } else {
-            Favorite.shared.recipes.append(recipe)
-        }
-        modifyFavoriteButton()
+        })
     }
     
-    private func modifyFavoriteButton() {
-        if Favorite.shared.recipes.contains(where: { tabRecipe in
-            tabRecipe.title == recipe.title
-        }) {
+    private func modifyFavoriteButton(isOn: Bool) {
+        if isOn {
             favoriteButton.image = UIImage(systemName: "star.fill")
             favoriteButton.tintColor = .green
         } else {
@@ -78,8 +90,7 @@ extension RecipeViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: Add precise ingredients
-        return recipe.ingredients.count
+        return recipe.detailIngredients.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,8 +98,7 @@ extension RecipeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        // TODO: Add precise ingredients
-        let ingredient = recipe.ingredients[indexPath.row]
+        let ingredient = recipe.detailIngredients[indexPath.row]
         cell.configure(ingredient: ingredient)
 
         return cell

@@ -12,7 +12,7 @@ class IngredientViewController: UIViewController {
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var ingredientTableView: UITableView!
 
-    var ingredients = [String]()
+    private var ingredients = [String]()
     private var segue = "RecipeList"
     private var cellIdentifier = "IngredientCell"
     
@@ -22,7 +22,11 @@ class IngredientViewController: UIViewController {
         ingredientTextField.delegate = self
         ingredientTableView.dataSource = self
         
-        ingredientTextField.addBottomLine()
+        configure()
+    }
+    
+    private func configure() {
+        ingredientTextField.addBottomLine(shortLine: 8, bottomPosition: 2)
     }
 }
 
@@ -36,7 +40,7 @@ extension IngredientViewController {
     private func addIngredientToList() {
         guard let ingredient = ingredientTextField.text, ingredient != "" else { return }
         if !ingredients.contains(ingredient) {
-            ingredients.append(ingredient)
+            ingredients.append(ingredient.noAccent().capitalized)
             ingredientTextField.text = nil
             ingredientTableView.reloadData()
         } else {
@@ -54,7 +58,7 @@ extension IngredientViewController {
     
     private func clearIngredientList() {
         if ingredients.count > 0 {
-            ingredients = []
+            ingredients.removeAll()
             ingredientTableView.reloadData()
         }
     }
@@ -71,8 +75,9 @@ extension IngredientViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == self.segue {
-            let recipeVC = segue.destination as! RecipeListViewController
-            recipeVC.ingredients = ingredients
+            if let recipeVC = segue.destination as? RecipeListViewController {
+                recipeVC.ingredients = ingredients
+            }
         }
     }
 }

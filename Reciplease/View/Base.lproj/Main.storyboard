@@ -303,8 +303,11 @@
                                             <constraint firstItem="yTO-4I-gw5" firstAttribute="top" secondItem="OYX-F2-WGV" secondAttribute="top" id="feL-XB-gVv"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="durationImageView" destination="8Mw-eT-pfd" id="U2O-zw-ACv"/>
                                             <outlet property="durationLabel" destination="yxE-wO-bHa" id="Ebi-yy-qeD"/>
+                                            <outlet property="infosStackView" destination="Z9q-l3-waC" id="QIl-Ef-NQ2"/>
                                             <outlet property="ingredientsLabel" destination="arJ-c0-Fp1" id="88V-A1-WeE"/>
+                                            <outlet property="likeImageView" destination="xzi-uj-R2r" id="uOm-gc-rRp"/>
                                             <outlet property="likeLabel" destination="4bc-Ug-b1K" id="Gj1-IK-mN9"/>
                                             <outlet property="recipeImage" destination="JwD-jt-bE4" id="UP7-yy-egO"/>
                                             <outlet property="titleLabel" destination="w9n-lG-1WC" id="tfC-gJ-cyl"/>
@@ -438,8 +441,11 @@
                                             <constraint firstItem="1G0-Xs-V2a" firstAttribute="leading" secondItem="HJZ-fY-cgU" secondAttribute="leading" id="VP9-iw-bVA"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="durationImageView" destination="4X1-We-IaS" id="DjF-D7-XsB"/>
                                             <outlet property="durationLabel" destination="PGd-tj-NZq" id="PCx-eo-hCg"/>
+                                            <outlet property="infosStackView" destination="E1t-Jt-9ZZ" id="hYk-Bo-akP"/>
                                             <outlet property="ingredientsLabel" destination="abw-OG-EHv" id="tlx-tH-Ae6"/>
+                                            <outlet property="likeImageView" destination="FbE-tN-tqj" id="Os2-fS-8vF"/>
                                             <outlet property="likeLabel" destination="hCv-Qj-5jG" id="vvB-dV-5Jf"/>
                                             <outlet property="recipeImage" destination="7md-e8-kV9" id="NI8-GR-iJh"/>
                                             <outlet property="titleLabel" destination="e8s-wT-FEN" id="9Fk-bq-uUW"/>
@@ -549,7 +555,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="355" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LU-23-2L1">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LU-23-2L1">
                                                     <rect key="frame" x="10" y="2" width="45" height="30"/>
                                                     <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -577,7 +583,7 @@
                                     <constraint firstAttribute="height" constant="70" id="lnj-jX-tny"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <state key="normal" title="Search for recipes">
+                                <state key="normal" title="Get directions">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -637,7 +643,9 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="a3p-qa-eOz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="Background"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="aWJ-dk-ajg" kind="relationship" relationship="viewControllers" id="qLx-dJ-n6u"/>

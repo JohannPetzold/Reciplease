@@ -10,19 +10,20 @@ import Alamofire
 
 protocol NetworkSession {
     
-    func requestData(apiUrl: String, parameters: [String: String], completion: @escaping (_ recipes: [RecipeJSON]?) -> Void)
+    func requestData(apiUrl: String, parameters: [String: String], completion: @escaping (_ recipes: [RecipeJSON]?, _ nextUrl: String?) -> Void)
 }
 
 extension Session: NetworkSession {
     
-    func requestData(apiUrl: String, parameters: [String : String], completion: @escaping ([RecipeJSON]?) -> Void) {
+    func requestData(apiUrl: String, parameters: [String : String], completion: @escaping ([RecipeJSON]?, String?) -> Void) {
         let request = Session.default.request(apiUrl, parameters: parameters)
         request.responseDecodable(of: RecipesJSON.self) { response in
             guard let recipes = response.value else {
-                completion(nil)
+                completion(nil, nil)
                 return
             }
-            completion(recipes.hits)
+            let nextUrl = recipes._links.next.href
+            completion(recipes.hits, nextUrl)
         }
     }
 }

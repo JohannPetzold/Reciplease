@@ -11,6 +11,7 @@ import UIKit
 
 class FavoriteRecipe: NSManagedObject {
     
+    // Get properties from Recipe
     func getDataFromRecipe(recipe: Recipe) {
         self.title = recipe.title
         self.image = recipe.imageData
@@ -19,5 +20,7 @@ class FavoriteRecipe: NSManagedObject {
         self.detailIngredients = recipe.detailIngredients.description.data(using: String.Encoding.utf16)
         self.preparationTime = Int16(recipe.preparationTime)
         self.score = Int32(recipe.score)
+        self.yield = Int16(recipe.yield)
+        self.sourceUrl = recipe.sourceUrl
     }
 }

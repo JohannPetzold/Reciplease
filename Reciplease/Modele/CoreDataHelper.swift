@@ -16,6 +16,7 @@ class CoreDataHelper {
         self.context = context
     }
     
+    // Save recipe into database
     func saveRecipe(recipe: Recipe, completion: (_ success: Bool) -> Void) {
         let favorite = FavoriteRecipe(context: context)
         favorite.getDataFromRecipe(recipe: recipe)
@@ -27,6 +28,7 @@ class CoreDataHelper {
         }
     }
     
+    // Delete recipe from database
     func deleteRecipe(recipe: Recipe, completion: (_ success: Bool) -> Void) {
         let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavoriteRecipe")
         request.predicate = NSPredicate(format: "title == %@", recipe.title)
@@ -39,6 +41,7 @@ class CoreDataHelper {
         }
     }
     
+    // Check is recipe is in database
     func isInDatabase(recipe: Recipe, completion: (_ result: Bool) -> Void) {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
         request.predicate = NSPredicate(format: "title == %@", recipe.title)
@@ -53,6 +56,7 @@ class CoreDataHelper {
         }
     }
     
+    // Get all recipes stored in database
     func getAllRecipes(completion: (_ recipes: [Recipe]) -> Void) {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
         guard let favorites = try? context.fetch(request) else {

@@ -12,8 +12,8 @@ import UIKit
 class RecipeTests: XCTestCase {
 
     func testGivenIngredientsShouldGetRecipeWhenUsingCompare() {
-        let recipe = Recipe(title: "Test", ingredients: ["Test1","Test2"], preparationTime: 20, score: 20)
-        let recipe2 = Recipe(title: "Test2", imageData: Data(), ingredients: ["Test2", "Test4"], preparationTime: 30, score: 20)
+        let recipe = Recipe(title: "Test", ingredients: ["Test1","Test2"], preparationTime: 20, score: 20, yield: 20)
+        let recipe2 = Recipe(title: "Test2", imageData: Data(), ingredients: ["Test2", "Test4"], preparationTime: 30, score: 20, yield: 20)
         let ingredients = ["Test1", "Test2", "Test3"]
         
         XCTAssertTrue(recipe.canBeCook(with: ingredients))

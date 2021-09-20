@@ -9,6 +9,7 @@ import Foundation
 
 class DataHelper {
     
+    // Load data from url on global queue
     func loadDataFromUrl(urlString: String, completion: @escaping (_ data: Data?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil)

@@ -15,6 +15,7 @@ class RecipeListViewController: UIViewController {
     var ingredients: [String]!
     private var service = APIService(session: AF)
     private var recipes = [Recipe]()
+    private var nextUrl: String?
     private var segueIdentifier = "RecipeDetail"
     private var cellIdentifier = "RecipeCell"
     
@@ -33,8 +34,9 @@ extension RecipeListViewController {
     
     private func getRecipesFromIngredients() {
         if ingredients.count > 0 {
-            service.fetchRecipes(with: ingredients) { result in
+            service.fetchRecipes(with: ingredients) { result, nextUrl in
                 if let newRecipes = result {
+                    self.nextUrl = nextUrl
                     self.recipes = newRecipes
                     self.tableView.reloadData()
                 } else {
@@ -44,13 +46,16 @@ extension RecipeListViewController {
         }
     }
     
-//    private func compareIngredientsWithRecipes() {
-//        for recipe in Recipe.recipeList {
-//            if recipe.canBeCook(with: ingredients) {
-//                recipes.append(recipe)
-//            }
-//        }
-//    }
+    private func loadMoreRecipes() {
+        guard let url = nextUrl else { return }
+        service.fetchRecipesFromUrl(urlString: url) { result, nextUrl in
+            if let newRecipes = result {
+                self.nextUrl = nextUrl
+                self.recipes.append(contentsOf: newRecipes)
+                self.tableView.reloadData()
+            }
+        }
+    }
 }
 
 // MARK: - Navigation
@@ -83,12 +88,16 @@ extension RecipeListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let recipe = recipes[indexPath.row]
         cell.configure(recipe: recipe)
-//        tableView.reloadRows(at: [indexPath], with: .automatic)
         cell.loadImage(from: recipes[indexPath.row]) { imageData in
             if let data = imageData {
                 self.recipes[indexPath.row].imageData = data
             }
         }
+        
+        if nextUrl != nil && indexPath.row == recipes.count - 1 {
+            loadMoreRecipes()
+        }
+        
         return cell
     }
     

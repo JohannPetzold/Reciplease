@@ -27,6 +27,10 @@ class FavoriteListViewController: UIViewController {
         super.viewWillAppear(animated)
         loadFavorites()
     }
+}
+
+// MARK: - Configure
+extension FavoriteListViewController {
     
     private func loadFavorites() {
         dbHelper.getAllRecipes { recipes in

@@ -24,6 +24,10 @@ class IngredientViewController: UIViewController {
         
         configure()
     }
+}
+
+// MARK: - Configure
+extension IngredientViewController {
     
     private func configure() {
         ingredientTextField.addBottomLine(shortLine: 8, bottomPosition: 2)

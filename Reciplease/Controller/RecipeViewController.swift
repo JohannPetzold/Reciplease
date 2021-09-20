@@ -6,13 +6,17 @@
 //
 
 import UIKit
+import SafariServices
 
 class RecipeViewController: UIViewController {
 
     @IBOutlet weak var recipeImage: UIImageView!
-    @IBOutlet weak var likeLabel: UILabel!
+    @IBOutlet weak var yieldLabel: UILabel!
+    @IBOutlet weak var yieldImageView: UIImageView!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var durationImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var infosStackView: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
@@ -31,10 +35,13 @@ class RecipeViewController: UIViewController {
         configure()
     }
     
+}
+
+// MARK: - Configure
+extension RecipeViewController {
+    
     private func configure() {
         titleLabel.text = recipe.title
-        likeLabel.text = "\(recipe.score)"
-        durationLabel.text = recipe.preparationTime.getStringTime()
         if let data = recipe.imageData {
             recipeImage.image = UIImage(data: data)
         }
@@ -42,6 +49,31 @@ class RecipeViewController: UIViewController {
         dbHelper.isInDatabase(recipe: recipe, completion: { result in
             modifyFavoriteButton(isOn: result)
         })
+        configureStackView()
+    }
+    
+    private func configureStackView() {
+        if recipe.yield != 0 {
+            yieldLabel.text = "\(recipe.yield)"
+            yieldLabel.isHidden = false
+            yieldImageView.isHidden = false
+        } else {
+            yieldLabel.isHidden = true
+            yieldImageView.isHidden = true
+        }
+        if recipe.preparationTime != 0 {
+            durationLabel.text = recipe.preparationTime.getStringTime()
+            durationLabel.isHidden = false
+            durationImageView.isHidden = false
+        } else {
+            durationLabel.isHidden = true
+            durationImageView.isHidden = true
+        }
+        if yieldLabel.isHidden && durationLabel.isHidden {
+            infosStackView.isHidden = true
+        } else {
+            infosStackView.isHidden = false
+        }
     }
 }
 
@@ -79,6 +111,24 @@ extension RecipeViewController {
             favoriteButton.image = UIImage(systemName: "star")
             favoriteButton.tintColor = .gray
         }
+    }
+}
+
+// MARK: - Navigation
+extension RecipeViewController {
+    
+    @IBAction func webRecipePressed(_ sender: UIButton) {
+        openLink()
+    }
+    
+    private func openLink() {
+        guard let url = URL(string: recipe.sourceUrl) else {
+            // TODO: Display error message
+            return
+        }
+        let configuration = SFSafariViewController.Configuration()
+        let safariVC = SFSafariViewController(url: url, configuration: configuration)
+        present(safariVC, animated: true, completion: nil)
     }
 }
 

@@ -12,8 +12,8 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var infosStackView: UIStackView!
-    @IBOutlet weak var likeLabel: UILabel!
-    @IBOutlet weak var likeImageView: UIImageView!
+    @IBOutlet weak var yieldLabel: UILabel!
+    @IBOutlet weak var yieldImageView: UIImageView!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var durationImageView: UIImageView!
     @IBOutlet weak var recipeImage: UIImageView!
@@ -26,6 +26,7 @@ class RecipeTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    // Configure Cell with recipe datas
     func configure(recipe: Recipe) {
         titleLabel.text = recipe.title
         ingredientsLabel.text = displayIngredientsFromList(ingredients: recipe.ingredients)
@@ -36,24 +37,32 @@ class RecipeTableViewCell: UITableViewCell {
         configureStackView(recipe: recipe)
     }
     
+    // Configure the yield and duration stack view
     private func configureStackView(recipe: Recipe) {
-        if recipe.score == 0 {
-            likeLabel.isHidden = true
-            likeImageView.isHidden = true
+        if recipe.yield != 0 {
+            yieldLabel.text = "\(recipe.yield)"
+            yieldLabel.isHidden = false
+            yieldImageView.isHidden = false
         } else {
-            likeLabel.text = "\(recipe.score)"
+            yieldLabel.isHidden = true
+            yieldImageView.isHidden = true
         }
-        if recipe.preparationTime == 0 {
+        if recipe.preparationTime != 0 {
+            durationLabel.text = recipe.preparationTime.getStringTime()
+            durationLabel.isHidden = false
+            durationImageView.isHidden = false
+        } else {
             durationLabel.isHidden = true
             durationImageView.isHidden = true
-        } else {
-            durationLabel.text = recipe.preparationTime.getStringTime()
         }
-        if likeLabel.isHidden && durationLabel.isHidden {
+        if yieldLabel.isHidden && durationLabel.isHidden {
             infosStackView.isHidden = true
+        } else {
+            infosStackView.isHidden = false
         }
     }
     
+    // Load image from recipe Data, from Url in global queue, or get generic image
     func loadImage(from recipe: Recipe, completion: @escaping (_ imageData: Data?) -> Void) {
         if let imageData = recipe.imageData {
             recipeImage.image = UIImage(data: imageData)
@@ -70,11 +79,18 @@ class RecipeTableViewCell: UITableViewCell {
                         }
                         completion(imageData)
                     }
+                    else {
+                        if let noUrlImage = UIImage.getGenericMealImage() {
+                            self.recipeImage.image = noUrlImage
+                            completion(noUrlImage.jpegData(compressionQuality: 1))
+                        }
+                    }
                 }
             }
         }
     }
     
+    // Display array of ingredients on a single String
     private func displayIngredientsFromList(ingredients: [String]) -> String {
         guard ingredients.count > 0 else { return "" }
         var result = ""

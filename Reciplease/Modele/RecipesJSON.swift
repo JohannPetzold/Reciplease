@@ -34,6 +34,8 @@ class RecipeData: Decodable {
     var url: String
     var ingredientLines: [String]
     var ingredients: [Ingredient]
+    var totalTime: Double
+    var yield: Double
 }
 
 class Ingredient: Decodable {

@@ -11,7 +11,8 @@ class IngredientViewController: UIViewController {
 
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var ingredientTableView: UITableView!
-
+    @IBOutlet weak var clearButton: RoundedButton!
+    
     private var ingredients = [String]()
     private var segue = "RecipeList"
     private var cellIdentifier = "IngredientCell"
@@ -22,15 +23,7 @@ class IngredientViewController: UIViewController {
         ingredientTextField.delegate = self
         ingredientTableView.dataSource = self
         
-        configure()
-    }
-}
-
-// MARK: - Configure
-extension IngredientViewController {
-    
-    private func configure() {
-        ingredientTextField.addBottomLine(shortLine: 8, bottomPosition: 2)
+        clearButtonState()
     }
 }
 
@@ -45,6 +38,7 @@ extension IngredientViewController {
         guard let ingredient = ingredientTextField.text, ingredient != "" else { return }
         if !ingredients.contains(ingredient) {
             ingredients.append(ingredient.noAccent().capitalized)
+            clearButtonState()
             ingredientTextField.text = nil
             ingredientTableView.reloadData()
         } else {
@@ -58,6 +52,7 @@ extension IngredientViewController {
     
     @IBAction func clearButtonPressed(_ sender: UIButton) {
         clearIngredientList()
+        clearButtonState()
     }
     
     private func clearIngredientList() {
@@ -65,6 +60,10 @@ extension IngredientViewController {
             ingredients.removeAll()
             ingredientTableView.reloadData()
         }
+    }
+    
+    private func clearButtonState() {
+        clearButton.isHidden = ingredients.isEmpty
     }
 }
 

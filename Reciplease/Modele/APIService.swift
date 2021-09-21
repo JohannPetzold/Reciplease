@@ -15,25 +15,10 @@ class APIService {
         self.session = session
     }
     
-    // Get recipes from NetworkSession with given ingredients
-    func fetchRecipes(with ingredients: [String], completion: @escaping (_ recipes: [Recipe]?, _ nextUrl: String?) -> Void) {
-        let parameters = APIRequest.createParameters(with: ingredients)
-        session.requestData(apiUrl: APIRequest.apiURL, parameters: parameters) { recipes, nextUrl in
-            if let recipesJson = recipes {
-                var result = [Recipe]()
-                for recipe in recipesJson {
-                    result.append(Recipe(recipeJson: recipe.recipe))
-                }
-                completion(result, nextUrl)
-            } else {
-                completion(nil, nil)
-            }
-        }
-    }
-    
-    // Get recipes from NetworkSession with given url
-    func fetchRecipesFromUrl(urlString: String, completion: @escaping (_ recipes: [Recipe]?, _ nextUrl: String?) -> Void) {
-        session.requestData(apiUrl: urlString, parameters: [:]) { recipes, nextUrl in
+    // Get recipes from NetworkSession with given url and ingredients
+    func fetchRecipes(apiUrl: String = APIRequest.apiURL, with ingredients: [String] = [], completion: @escaping (_ recipes: [Recipe]?, _ nextUrl: String?) -> Void) {
+        let parameters = ingredients.isEmpty ? [:] : APIRequest.createParameters(with: ingredients)
+        session.requestData(apiUrl: apiUrl, parameters: parameters) { recipes, nextUrl in
             if let recipesJson = recipes {
                 var result = [Recipe]()
                 for recipe in recipesJson {

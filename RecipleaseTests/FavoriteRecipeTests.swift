@@ -26,4 +26,12 @@ class FavoriteRecipeTests: XCTestCase {
         XCTAssertEqual(finalRecipe?.title, favorite.title)
         XCTAssertEqual(finalRecipe?.ingredients, favorite.ingredients)
     }
+    
+    func testGivenEmptyFavoriteRecipeWhenInitRecipeThenShouldGetEmptyRecipe() {
+        let context = TestCoreDataStack().persistentContainer.viewContext
+        let favorite = FavoriteRecipe(context: context)
+        let recipe = Recipe(favoriteRecipe: favorite)
+        
+        XCTAssertEqual(recipe.title, "")
+    }
 }

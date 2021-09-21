@@ -10,13 +10,10 @@ import SafariServices
 
 class RecipeViewController: UIViewController {
 
-    @IBOutlet weak var recipeImage: UIImageView!
-    @IBOutlet weak var yieldLabel: UILabel!
-    @IBOutlet weak var yieldImageView: UIImageView!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var durationImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var infosStackView: UIStackView!
+    @IBOutlet weak var infosLabel: UILabel!
+    @IBOutlet weak var ingredientsLabel: UILabel!
+    @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var favoriteButton: UIBarButtonItem!
     
@@ -32,7 +29,7 @@ class RecipeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configure()
+        setup()
     }
     
 }
@@ -40,40 +37,46 @@ class RecipeViewController: UIViewController {
 // MARK: - Configure
 extension RecipeViewController {
     
-    private func configure() {
+    private func setup() {
         titleLabel.text = recipe.title
-        if let data = recipe.imageData {
-            recipeImage.image = UIImage(data: data)
-        }
-        recipeImage.addShadowGradient(width: self.view.bounds.width, height: self.view.bounds.width / 2)
+        configureInfosLabel()
+        configureIngredientsLabel()
+        configureImage()
+        
         dbHelper.isInDatabase(recipe: recipe, completion: { result in
             modifyFavoriteButton(isOn: result)
         })
-        configureStackView()
     }
     
-    private func configureStackView() {
-        if recipe.yield != 0 {
-            yieldLabel.text = "\(recipe.yield)"
-            yieldLabel.isHidden = false
-            yieldImageView.isHidden = false
-        } else {
-            yieldLabel.isHidden = true
-            yieldImageView.isHidden = true
+    private func configureIngredientsLabel() {
+        var text = "Ingredient"
+        if recipe.ingredients.count > 0 {
+            if recipe.ingredients.count > 1 {
+                text += "s"
+            }
+            text += " (\(recipe.ingredients.count))"
         }
-        if recipe.preparationTime != 0 {
-            durationLabel.text = recipe.preparationTime.getStringTime()
-            durationLabel.isHidden = false
-            durationImageView.isHidden = false
-        } else {
-            durationLabel.isHidden = true
-            durationImageView.isHidden = true
+        ingredientsLabel.text = text
+    }
+    
+    private func configureInfosLabel() {
+        var text = ""
+        if recipe.yield > 0 {
+            text = "\(recipe.yield) People"
+            
         }
-        if yieldLabel.isHidden && durationLabel.isHidden {
-            infosStackView.isHidden = true
-        } else {
-            infosStackView.isHidden = false
+        if recipe.preparationTime > 0 {
+            text += text.isEmpty ? recipe.preparationTime.getStringTime() : " - " + recipe.preparationTime.getStringTime()
         }
+        
+        infosLabel.text = text
+    }
+    
+    private func configureImage() {
+        if let data = recipe.imageData {
+            recipeImage.image = UIImage(data: data)
+        }
+        recipeImage.layer.cornerRadius = 10
     }
 }
 
@@ -106,7 +109,7 @@ extension RecipeViewController {
     private func modifyFavoriteButton(isOn: Bool) {
         if isOn {
             favoriteButton.image = UIImage(systemName: "star.fill")
-            favoriteButton.tintColor = .green
+            favoriteButton.tintColor = UIColor(named: "GreenColor1")
         } else {
             favoriteButton.image = UIImage(systemName: "star")
             favoriteButton.tintColor = .gray
@@ -128,6 +131,7 @@ extension RecipeViewController {
         }
         let configuration = SFSafariViewController.Configuration()
         let safariVC = SFSafariViewController(url: url, configuration: configuration)
+//        self.navigationController?.pushViewController(safariVC, animated: true)
         present(safariVC, animated: true, completion: nil)
     }
 }

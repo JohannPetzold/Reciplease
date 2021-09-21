@@ -19,7 +19,7 @@ class APIServiceTests: XCTestCase {
         let sessionMock = NetworkSessionMock(recipesJson: recipes, nextUrl: nextUrl)
         let service = APIService(session: sessionMock)
         
-        service.fetchRecipes(with: []) { recipes, nextUrl in
+        service.fetchRecipes(with: ["Test"]) { recipes, nextUrl in
             XCTAssertEqual(recipes?.first?.title, "Chicken Vesuvio")
             XCTAssertEqual(recipes?.first?.yield, 4)
             XCTAssertEqual(nextUrl, self.recipeNextUrl)
@@ -31,30 +31,6 @@ class APIServiceTests: XCTestCase {
         let service = APIService(session: sessionMock)
         
         service.fetchRecipes(with: []) { recipes, nextUrl in
-            XCTAssertNil(recipes)
-            XCTAssertNil(nextUrl)
-        }
-    }
-    
-    func testGivenGoodSessionWhenFetchingRecipesFromUrlThenGetArrayOfRecipe() {
-        guard let recipesJson = ResponseDataMock.loadRecipesData(filename: "Recipes") else { return }
-        let recipes = recipesJson.hits
-        let nextUrl = recipesJson._links.next.href
-        let sessionMock = NetworkSessionMock(recipesJson: recipes, nextUrl: nextUrl)
-        let service = APIService(session: sessionMock)
-        
-        service.fetchRecipesFromUrl(urlString: nextUrl) { recipes, nextUrl in
-            XCTAssertEqual(recipes?.first?.title, "Chicken Vesuvio")
-            XCTAssertEqual(recipes?.first?.yield, 4)
-            XCTAssertEqual(nextUrl, self.recipeNextUrl)
-        }
-    }
-    
-    func testGivenBadSessionWhenFetchingRecipesWithUrlThenGetNil() {
-        let sessionMock = NetworkSessionMock(recipesJson: nil, nextUrl: nil)
-        let service = APIService(session: sessionMock)
-        
-        service.fetchRecipesFromUrl(urlString: "") { recipes, nextUrl in
             XCTAssertNil(recipes)
             XCTAssertNil(nextUrl)
         }

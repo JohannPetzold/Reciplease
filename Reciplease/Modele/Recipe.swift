@@ -49,17 +49,13 @@ class Recipe {
         imageData = favoriteRecipe.image ?? nil
         imageUrl = favoriteRecipe.imageUrl ?? ""
         if let favoriteIngredients = favoriteRecipe.ingredients {
-            do {
-                ingredients = try JSONDecoder().decode([String].self, from: favoriteIngredients)
-            } catch {
-                ingredients = []
+            if let newIngredients = try? JSONDecoder().decode([String].self, from: favoriteIngredients) {
+                ingredients = newIngredients
             }
         }
         if let favoriteDetailIngredients = favoriteRecipe.detailIngredients {
-            do {
-                detailIngredients = try JSONDecoder().decode([String].self, from: favoriteDetailIngredients)
-            } catch {
-                detailIngredients = []
+            if let newDetailIngredients = try? JSONDecoder().decode([String].self, from: favoriteDetailIngredients) {
+                detailIngredients = newDetailIngredients
             }
         }
         preparationTime = Int(favoriteRecipe.preparationTime)

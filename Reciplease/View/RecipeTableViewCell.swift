@@ -9,14 +9,11 @@ import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
 
+    
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ingredientsLabel: UILabel!
-    @IBOutlet weak var infosStackView: UIStackView!
-    @IBOutlet weak var yieldLabel: UILabel!
-    @IBOutlet weak var yieldImageView: UIImageView!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var durationImageView: UIImageView!
+    @IBOutlet weak var infosLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,37 +26,29 @@ class RecipeTableViewCell: UITableViewCell {
     // Configure Cell with recipe datas
     func configure(recipe: Recipe) {
         titleLabel.text = recipe.title
-        ingredientsLabel.text = displayIngredientsFromList(ingredients: recipe.ingredients)
         if recipeImage.layer.contents == nil {
             recipeImage.addShadowGradient(width: UIScreen.main.bounds.width, height: self.frame.height)
         }
         recipeImage.image = nil
-        configureStackView(recipe: recipe)
+        recipeImage.layer.cornerRadius = 10
+        configureInfosLabel(recipe: recipe)
     }
     
-    // Configure the yield and duration stack view
-    private func configureStackView(recipe: Recipe) {
-        if recipe.yield != 0 {
-            yieldLabel.text = "\(recipe.yield)"
-            yieldLabel.isHidden = false
-            yieldImageView.isHidden = false
-        } else {
-            yieldLabel.isHidden = true
-            yieldImageView.isHidden = true
+    private func configureInfosLabel(recipe: Recipe) {
+        var text = ""
+        if recipe.ingredients.count > 0 {
+            text = "\(recipe.ingredients.count) Ingredient"
+            if recipe.ingredients.count > 1 {
+                text += "s"
+            }
         }
-        if recipe.preparationTime != 0 {
-            durationLabel.text = recipe.preparationTime.getStringTime()
-            durationLabel.isHidden = false
-            durationImageView.isHidden = false
-        } else {
-            durationLabel.isHidden = true
-            durationImageView.isHidden = true
+        if recipe.yield > 0 {
+            text += text.isEmpty ? "\(recipe.yield) People" : " | \(recipe.yield) People"
         }
-        if yieldLabel.isHidden && durationLabel.isHidden {
-            infosStackView.isHidden = true
-        } else {
-            infosStackView.isHidden = false
+        if recipe.preparationTime > 0 {
+            text += text.isEmpty ? recipe.preparationTime.getStringTime() : " | " + recipe.preparationTime.getStringTime()
         }
+        infosLabel.text = text
     }
     
     // Load image from recipe Data, from Url in global queue, or get generic image

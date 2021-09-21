@@ -48,7 +48,7 @@ extension RecipeListViewController {
     
     private func loadMoreRecipes() {
         guard let url = nextUrl else { return }
-        service.fetchRecipesFromUrl(urlString: url) { result, nextUrl in
+        service.fetchRecipes(apiUrl: url) { result, nextUrl in
             if let newRecipes = result {
                 self.nextUrl = nextUrl
                 self.recipes.append(contentsOf: newRecipes)

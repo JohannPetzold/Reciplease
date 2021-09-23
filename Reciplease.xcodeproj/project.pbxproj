@@ -40,6 +40,7 @@
 		40B3207626F4BFF700BF507A /* DataHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B3207526F4BFF700BF507A /* DataHelperTests.swift */; };
 		40B3207826F4C5B200BF507A /* testFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 40B3207726F4C5B200BF507A /* testFile.json */; };
 		40B3862626F0CF62006125C9 /* FavoriteRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B3862526F0CF62006125C9 /* FavoriteRecipe.swift */; };
+		40BB1E6126FC90D6002EE7A9 /* WebRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB1E6026FC90D6002EE7A9 /* WebRecipeViewController.swift */; };
 		40C5289226E9042C000533EA /* RecipesJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5289126E9042C000533EA /* RecipesJSON.swift */; };
 		40D54E8426E662B6009F24EB /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D54E8326E662B6009F24EB /* ExtensionString.swift */; };
 		40D54E8626E66B7F009F24EB /* ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D54E8526E66B7F009F24EB /* ExtensionsTests.swift */; };
@@ -101,6 +102,7 @@
 		40B3207526F4BFF700BF507A /* DataHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHelperTests.swift; sourceTree = "<group>"; };
 		40B3207726F4C5B200BF507A /* testFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testFile.json; sourceTree = "<group>"; };
 		40B3862526F0CF62006125C9 /* FavoriteRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipe.swift; sourceTree = "<group>"; };
+		40BB1E6026FC90D6002EE7A9 /* WebRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRecipeViewController.swift; sourceTree = "<group>"; };
 		40C5289126E9042C000533EA /* RecipesJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesJSON.swift; sourceTree = "<group>"; };
 		40D54E8326E662B6009F24EB /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		40D54E8526E66B7F009F24EB /* ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsTests.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				402BFD0726E1208600CFBE01 /* RecipeListViewController.swift */,
 				402BFD0926E120E200CFBE01 /* RecipeViewController.swift */,
 				402BFD0B26E122FB00CFBE01 /* FavoriteListViewController.swift */,
+				40BB1E6026FC90D6002EE7A9 /* WebRecipeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				409247E126E2850D008D6BCC /* ExtensionUITextField.swift in Sources */,
 				40B3862626F0CF62006125C9 /* FavoriteRecipe.swift in Sources */,
 				405866D026F4B0A30055AC34 /* APIService.swift in Sources */,
+				40BB1E6126FC90D6002EE7A9 /* WebRecipeViewController.swift in Sources */,
 				407090A726FA117700E8B1DE /* RoundedButton.swift in Sources */,
 				402BFCD126E11EE300CFBE01 /* AppDelegate.swift in Sources */,
 				40B3207026F4B5D400BF507A /* DataHelper.swift in Sources */,

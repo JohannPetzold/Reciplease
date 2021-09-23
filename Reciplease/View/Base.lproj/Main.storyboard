@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,7 +14,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="IngredientViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find Best Recipe" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R1d-gl-V1L">
@@ -200,7 +201,7 @@
             <objects>
                 <viewController id="6jT-ay-cte" customClass="FavoriteListViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kcX-xt-gyB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fMD-3h-Stf">
@@ -282,7 +283,7 @@
             <objects>
                 <viewController id="Tfk-7C-v3G" customClass="RecipeListViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AkT-kn-uvN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q8H-84-KVz">
@@ -364,7 +365,7 @@
             <objects>
                 <viewController id="0Cf-pb-7xv" customClass="RecipeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2XU-n8-XVu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdr-k5-ZM4">
@@ -478,11 +479,60 @@
                         <outlet property="recipeImage" destination="4VU-Wm-7lC" id="XHC-LU-Dya"/>
                         <outlet property="tableView" destination="kAd-2K-VK7" id="jVI-bN-LPR"/>
                         <outlet property="titleLabel" destination="Pdr-k5-ZM4" id="Jpp-dT-aQA"/>
+                        <segue destination="mxh-ko-g40" kind="show" identifier="WebRecipe" id="qW9-Il-YCl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KiS-lj-vPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2200.8000000000002" y="505.99700149925042"/>
+        </scene>
+        <!--Reciplease-->
+        <scene sceneID="z6g-rx-D8g">
+            <objects>
+                <viewController id="mxh-ko-g40" customClass="WebRecipeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dK3-ak-ypo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Bp-ww-N4s">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <color key="backgroundColor" name="Background2"/>
+                                <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsInlineMediaPlayback="YES" allowsPictureInPictureMediaPlayback="NO">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="9hA-5H-eOd">
+                                <rect key="frame" x="169" y="293" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rSJ-Gc-ItO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9hA-5H-eOd" firstAttribute="centerX" secondItem="dK3-ak-ypo" secondAttribute="centerX" id="0um-0C-ehg"/>
+                            <constraint firstItem="rSJ-Gc-ItO" firstAttribute="bottom" secondItem="2Bp-ww-N4s" secondAttribute="bottom" id="4WX-WN-kXR"/>
+                            <constraint firstItem="rSJ-Gc-ItO" firstAttribute="trailing" secondItem="2Bp-ww-N4s" secondAttribute="trailing" id="91I-iP-69G"/>
+                            <constraint firstItem="9hA-5H-eOd" firstAttribute="centerY" secondItem="dK3-ak-ypo" secondAttribute="centerY" id="MLB-s0-iGF"/>
+                            <constraint firstItem="2Bp-ww-N4s" firstAttribute="leading" secondItem="rSJ-Gc-ItO" secondAttribute="leading" id="QSp-vU-uqr"/>
+                            <constraint firstItem="2Bp-ww-N4s" firstAttribute="top" secondItem="rSJ-Gc-ItO" secondAttribute="top" id="uih-jE-LGa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Reciplease" id="I2e-8f-Lf1">
+                        <barButtonItem key="rightBarButtonItem" title="Safari Button" image="safari" catalog="system" id="Ib0-dt-LuG">
+                            <connections>
+                                <action selector="safariButtonPressed:" destination="mxh-ko-g40" id="YYz-Dp-nZd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activityIndicator" destination="9hA-5H-eOd" id="9cx-Ao-Xj1"/>
+                        <outlet property="safariButton" destination="Ib0-dt-LuG" id="p1D-iH-5l1"/>
+                        <outlet property="webView" destination="2Bp-ww-N4s" id="d4W-4a-lKs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NER-sA-Pvb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3142" y="506"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="gWz-va-ww9">
@@ -532,22 +582,26 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tuC-w9-Pnn"/>
+        <segue reference="6PG-Kk-Fpe"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemBlueColor"/>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus.app.fill" catalog="system" width="128" height="114"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <namedColor name="Background2">
-            <color red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92100000381469727" green="0.92100000381469727" blue="0.92100000381469727" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="GreenColor1">
-            <color red="0.0" green="0.75586611029999995" blue="0.35208457710000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.0" green="0.75599998235702515" blue="0.35199999809265137" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="GreenColor2">
-            <color red="0.89984059329999999" green="0.96505838629999996" blue="0.92936128380000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.89999997615814209" green="0.9649999737739563" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

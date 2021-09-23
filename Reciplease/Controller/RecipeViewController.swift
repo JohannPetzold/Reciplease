@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SafariServices
 
 class RecipeViewController: UIViewController {
 
@@ -19,6 +18,7 @@ class RecipeViewController: UIViewController {
     
     var recipe: Recipe!
     let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
+    private var segueIdentifier = "WebRecipe"
     private var cellIdentifier = "IngredientCell"
     
     override func viewDidLoad() {
@@ -129,10 +129,15 @@ extension RecipeViewController {
             // TODO: Display error message
             return
         }
-        let configuration = SFSafariViewController.Configuration()
-        let safariVC = SFSafariViewController(url: url, configuration: configuration)
-//        self.navigationController?.pushViewController(safariVC, animated: true)
-        present(safariVC, animated: true, completion: nil)
+        performSegue(withIdentifier: segueIdentifier, sender: url)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueIdentifier, let webVC = segue.destination as? WebRecipeViewController {
+            if let senderUrl = sender as? URL {
+                webVC.url = senderUrl
+            }
+        }
     }
 }
 

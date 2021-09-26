@@ -12,6 +12,8 @@ class IngredientViewController: UIViewController {
     @IBOutlet weak var ingredientTextField: UITextField!
     @IBOutlet weak var ingredientTableView: UITableView!
     @IBOutlet weak var clearButton: RoundedButton!
+    @IBOutlet weak var searchButton: RoundedButton!
+    @IBOutlet weak var inListErrorLabel: UILabel!
     
     private var ingredients = [String]()
     private var segue = "RecipeList"
@@ -20,10 +22,23 @@ class IngredientViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
+    }
+}
+
+// MARK: - Configure
+extension IngredientViewController {
+    
+    private func setup() {
         ingredientTextField.delegate = self
         ingredientTableView.dataSource = self
-        
+        searchButtonState()
         clearButtonState()
+    }
+    
+    private func searchButtonState() {
+        searchButton.isEnabled = !ingredients.isEmpty
+        searchButton.alpha = searchButton.isEnabled ? 1 : 0.4
     }
 }
 
@@ -36,13 +51,30 @@ extension IngredientViewController {
     
     private func addIngredientToList() {
         guard let ingredient = ingredientTextField.text, ingredient != "" else { return }
-        if !ingredients.contains(ingredient) {
+        if !ingredients.contains(ingredient.noAccent().capitalized) {
             ingredients.append(ingredient.noAccent().capitalized)
             clearButtonState()
+            searchButtonState()
             ingredientTextField.text = nil
-            ingredientTableView.reloadData()
+            let indexPath = IndexPath(item: ingredients.count - 1, section: 0)
+            ingredientTableView.beginUpdates()
+            ingredientTableView.insertRows(at: [indexPath], with: .fade)
+            ingredientTableView.endUpdates()
         } else {
-            // TODO: Display Error Message
+            displayErrorLabel(label: inListErrorLabel)
+        }
+    }
+}
+
+// MARK: - Error
+extension IngredientViewController {
+    
+    private func displayErrorLabel(label: UILabel) {
+        if label.isHidden {
+            label.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                label.isHidden = true
+            }
         }
     }
 }
@@ -53,6 +85,7 @@ extension IngredientViewController {
     @IBAction func clearButtonPressed(_ sender: UIButton) {
         clearIngredientList()
         clearButtonState()
+        searchButtonState()
     }
     
     private func clearIngredientList() {

@@ -10,6 +10,7 @@ import UIKit
 class FavoriteListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyListView: UIView!
     
     private let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
     private var favorites = [Recipe]()
@@ -34,9 +35,22 @@ extension FavoriteListViewController {
     
     private func loadFavorites() {
         dbHelper.getAllRecipes { recipes in
+            if recipes.isEmpty {
+                displayEmptyListView(true)
+            } else {
+                displayEmptyListView(false)
+            }
             self.favorites = recipes
             tableView.reloadData()
         }
+    }
+}
+
+// MARK: - Empty List
+extension FavoriteListViewController {
+    
+    private func displayEmptyListView(_ display: Bool) {
+        emptyListView.isHidden = !display
     }
 }
 
@@ -69,8 +83,7 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         let recipe = favorites[indexPath.row]
-        cell.configure(recipe: recipe)
-        cell.loadImage(from: favorites[indexPath.row]) { _ in }
+        cell.configureCell(recipe: recipe) { _ in }
         return cell
     }
     

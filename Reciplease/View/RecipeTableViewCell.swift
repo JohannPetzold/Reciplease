@@ -8,30 +8,40 @@
 import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
-
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infosLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
-    
+    @IBOutlet weak var skeletonTitleView: UIView!
+    @IBOutlet weak var skeletonInfosView: UIView!
+    @IBOutlet weak var skeletonImageView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        recipeImage.layer.cornerRadius = 10
+        skeletonTitleView.layer.cornerRadius = 5
+        skeletonInfosView.layer.cornerRadius = 5
+        skeletonImageView.layer.cornerRadius = 10
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
 
-    // Configure Cell with recipe datas
-    func configure(recipe: Recipe) {
-        titleLabel.text = recipe.title
-        if recipeImage.layer.contents == nil {
-            recipeImage.addShadowGradient(width: UIScreen.main.bounds.width, height: self.frame.height)
-        }
+    func resetCellData() {
+        titleLabel.text = nil
+        infosLabel.text = nil
         recipeImage.image = nil
-        recipeImage.layer.cornerRadius = 10
+        showSkeleton(true)
+    }
+    
+    // Configure Cell with recipe datas
+    func configureCell(recipe: Recipe, completion: @escaping (_ imageData: Data?) -> Void) {
+        titleLabel.text = recipe.title
         configureInfosLabel(recipe: recipe)
+        configureImage(from: recipe) { data in
+            completion(data)
+        }
     }
     
     private func configureInfosLabel(recipe: Recipe) {
@@ -51,44 +61,43 @@ class RecipeTableViewCell: UITableViewCell {
         infosLabel.text = text
     }
     
-    // Load image from recipe Data, from Url in global queue, or get generic image
-    func loadImage(from recipe: Recipe, completion: @escaping (_ imageData: Data?) -> Void) {
-        if let imageData = recipe.imageData {
-            recipeImage.image = UIImage(data: imageData)
-            completion(nil)
-        } else {
-            if recipe.imageUrl == "", let noUrlImage = UIImage.getGenericMealImage() {
-                recipeImage.image = noUrlImage
-                completion(noUrlImage.jpegData(compressionQuality: 1))
-            } else {
-                DataHelper().loadDataFromUrl(urlString: recipe.imageUrl) { data in
-                    if let imageData = data, let newImage = UIImage(data: imageData) {
-                        DispatchQueue.main.async {
-                            self.recipeImage.image = newImage
-                        }
-                        completion(imageData)
-                    }
-                    else {
-                        if let noUrlImage = UIImage.getGenericMealImage() {
-                            self.recipeImage.image = noUrlImage
-                            completion(noUrlImage.jpegData(compressionQuality: 1))
-                        }
-                    }
-                }
+    private func configureImage(from recipe: Recipe, completion: @escaping (_ imageData: Data?) -> Void) {
+        loadImage(from: recipe) { newImage, data in
+            if let image = newImage {
+                self.recipeImage.image = image
+                self.showSkeleton(false)
+                self.addShadowToImage()
+                completion(data)
             }
         }
     }
     
-    // Display array of ingredients on a single String
-    private func displayIngredientsFromList(ingredients: [String]) -> String {
-        guard ingredients.count > 0 else { return "" }
-        var result = ""
-        for x in 0..<ingredients.count {
-            result += ingredients[x]
-            if x < ingredients.count - 1 {
-                result += ", "
+    private func loadImage(from recipe: Recipe, completion: @escaping (_ image: UIImage?, _ recipeImageData: Data?) -> Void) {
+        if let imageData = recipe.imageData, let image = UIImage(data: imageData) {
+            completion(image, nil)
+        } else if recipe.imageUrl != "" {
+            DataHelper().loadDataFromUrl(urlString: recipe.imageUrl) { data in
+                if let imageData = data, let newImage = UIImage(data: imageData) {
+                    DispatchQueue.main.async {
+                        completion(newImage, imageData)
+                    }
+                }
             }
+        } else if let noUrlImage = UIImage.getGenericMealImage() {
+            completion(noUrlImage, noUrlImage.jpegData(compressionQuality: 1))
         }
-        return result
+    }
+    
+    private func addShadowToImage() {
+        if recipeImage.subviews.count == 0 {
+            let shadowView = UIView.addShadowGradient(width: UIScreen.main.bounds.width, height: self.frame.height)
+            recipeImage.addSubview(shadowView)
+        }
+    }
+    
+    private func showSkeleton(_ state: Bool) {
+        skeletonTitleView.isHidden = !state
+        skeletonInfosView.isHidden = !state
+        skeletonImageView.isHidden = !state
     }
 }

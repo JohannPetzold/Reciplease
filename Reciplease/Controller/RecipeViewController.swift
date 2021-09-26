@@ -14,10 +14,12 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var favoriteButton: UIBarButtonItem!
+    @IBOutlet weak var favoriteButton: FavoriteBarButton!
+    @IBOutlet weak var viewRecipeButton: RoundedButton!
     
     var recipe: Recipe!
-    let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
+    private let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
+    private var recipeUrl: URL? = nil
     private var segueIdentifier = "WebRecipe"
     private var cellIdentifier = "IngredientCell"
     
@@ -42,9 +44,10 @@ extension RecipeViewController {
         configureInfosLabel()
         configureIngredientsLabel()
         configureImage()
+        configureViewRecipeButton()
         
         dbHelper.isInDatabase(recipe: recipe, completion: { result in
-            modifyFavoriteButton(isOn: result)
+            favoriteButton.modifyState(result)
         })
     }
     
@@ -68,7 +71,6 @@ extension RecipeViewController {
         if recipe.preparationTime > 0 {
             text += text.isEmpty ? recipe.preparationTime.getStringTime() : " - " + recipe.preparationTime.getStringTime()
         }
-        
         infosLabel.text = text
     }
     
@@ -78,42 +80,33 @@ extension RecipeViewController {
         }
         recipeImage.layer.cornerRadius = 10
     }
+    
+    private func configureViewRecipeButton() {
+        recipeUrl = URL(string: recipe.sourceUrl)
+        viewRecipeButton.isEnabled = (recipeUrl != nil)
+        viewRecipeButton.alpha = viewRecipeButton.isEnabled ? 1 : 0.4
+    }
 }
 
 // MARK: - Favorite
 extension RecipeViewController {
     
-    @IBAction func favoriteButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction func favoriteButtonPressed(_ sender: FavoriteBarButton) {
         manageFavorite()
     }
     
     private func manageFavorite() {
         dbHelper.isInDatabase(recipe: recipe, completion: { result in
-            modifyFavoriteButton(isOn: !result)
             if result {
                 dbHelper.deleteRecipe(recipe: recipe) { success in
-                    if !success {
-                        // TODO: Display error message
-                    }
+                    favoriteButton.modifyState(!success)
                 }
             } else {
                 dbHelper.saveRecipe(recipe: recipe) { success in
-                    if !success {
-                        // TODO: Display error message
-                    }
+                    favoriteButton.modifyState(success)
                 }
             }
         })
-    }
-    
-    private func modifyFavoriteButton(isOn: Bool) {
-        if isOn {
-            favoriteButton.image = UIImage(systemName: "star.fill")
-            favoriteButton.tintColor = UIColor(named: "GreenColor1")
-        } else {
-            favoriteButton.image = UIImage(systemName: "star")
-            favoriteButton.tintColor = .gray
-        }
     }
 }
 
@@ -125,10 +118,7 @@ extension RecipeViewController {
     }
     
     private func openLink() {
-        guard let url = URL(string: recipe.sourceUrl) else {
-            // TODO: Display error message
-            return
-        }
+        guard let url = recipeUrl else { return }
         performSegue(withIdentifier: segueIdentifier, sender: url)
     }
     
@@ -136,6 +126,7 @@ extension RecipeViewController {
         if segue.identifier == segueIdentifier, let webVC = segue.destination as? WebRecipeViewController {
             if let senderUrl = sender as? URL {
                 webVC.url = senderUrl
+                webVC.recipe = recipe
             }
         }
     }

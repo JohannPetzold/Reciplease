@@ -33,6 +33,7 @@
 		409247DF26E27EB3008D6BCC /* ExtensionUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409247DE26E27EB3008D6BCC /* ExtensionUIView.swift */; };
 		409247E126E2850D008D6BCC /* ExtensionUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409247E026E2850D008D6BCC /* ExtensionUITextField.swift */; };
 		409526D926EF511100A7D289 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409526D826EF511100A7D289 /* Constants.swift */; };
+		409A66452701D153008CB20C /* ManageFavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A66442701D153008CB20C /* ManageFavoriteViewController.swift */; };
 		409D59B526E23A9200CBDDF8 /* IngredientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409D59B426E23A9200CBDDF8 /* IngredientTableViewCell.swift */; };
 		409D59B726E23D2700CBDDF8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409D59B626E23D2700CBDDF8 /* Recipe.swift */; };
 		409D59B926E243FA00CBDDF8 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409D59B826E243FA00CBDDF8 /* RecipeTableViewCell.swift */; };
@@ -46,7 +47,6 @@
 		40C5289226E9042C000533EA /* RecipesJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5289126E9042C000533EA /* RecipesJSON.swift */; };
 		40D54E8426E662B6009F24EB /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D54E8326E662B6009F24EB /* ExtensionString.swift */; };
 		40D54E8626E66B7F009F24EB /* ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D54E8526E66B7F009F24EB /* ExtensionsTests.swift */; };
-		40D54E8B26E66F54009F24EB /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D54E8A26E66F54009F24EB /* RecipeTests.swift */; };
 		40F093E426F22CE8005EBD5F /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F093E326F22CE8005EBD5F /* CoreDataHelper.swift */; };
 		40F093E626F243A3005EBD5F /* CoreDataHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F093E526F243A3005EBD5F /* CoreDataHelperTests.swift */; };
 		B43CDE4C73DCF2C6F7DF5506 /* Pods_RecipleaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496B03F3C83893440AA5F63B /* Pods_RecipleaseTests.framework */; };
@@ -95,6 +95,7 @@
 		409247DE26E27EB3008D6BCC /* ExtensionUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIView.swift; sourceTree = "<group>"; };
 		409247E026E2850D008D6BCC /* ExtensionUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUITextField.swift; sourceTree = "<group>"; };
 		409526D826EF511100A7D289 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		409A66442701D153008CB20C /* ManageFavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFavoriteViewController.swift; sourceTree = "<group>"; };
 		409D59B426E23A9200CBDDF8 /* IngredientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTableViewCell.swift; sourceTree = "<group>"; };
 		409D59B626E23D2700CBDDF8 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		409D59B826E243FA00CBDDF8 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
@@ -108,7 +109,6 @@
 		40C5289126E9042C000533EA /* RecipesJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesJSON.swift; sourceTree = "<group>"; };
 		40D54E8326E662B6009F24EB /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
 		40D54E8526E66B7F009F24EB /* ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsTests.swift; sourceTree = "<group>"; };
-		40D54E8A26E66F54009F24EB /* RecipeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTests.swift; sourceTree = "<group>"; };
 		40F093E326F22CE8005EBD5F /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		40F093E526F243A3005EBD5F /* CoreDataHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelperTests.swift; sourceTree = "<group>"; };
 		486589FC1B79C6B269E4AC8E /* Pods-Reciplease.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Reciplease.release.xcconfig"; path = "Target Support Files/Pods-Reciplease/Pods-Reciplease.release.xcconfig"; sourceTree = "<group>"; };
@@ -206,7 +206,6 @@
 			children = (
 				4006536A26EA602B00551A9A /* Utils */,
 				402BFCEC26E11EE300CFBE01 /* Info.plist */,
-				40D54E8A26E66F54009F24EB /* RecipeTests.swift */,
 				400B863726F0E6E40031242C /* FavoriteRecipeTests.swift */,
 				40F093E526F243A3005EBD5F /* CoreDataHelperTests.swift */,
 				40B3207526F4BFF700BF507A /* DataHelperTests.swift */,
@@ -222,9 +221,10 @@
 			children = (
 				402BFCD426E11EE300CFBE01 /* IngredientViewController.swift */,
 				402BFD0726E1208600CFBE01 /* RecipeListViewController.swift */,
-				402BFD0926E120E200CFBE01 /* RecipeViewController.swift */,
 				402BFD0B26E122FB00CFBE01 /* FavoriteListViewController.swift */,
+				402BFD0926E120E200CFBE01 /* RecipeViewController.swift */,
 				40BB1E6026FC90D6002EE7A9 /* WebRecipeViewController.swift */,
+				409A66442701D153008CB20C /* ManageFavoriteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -486,6 +486,7 @@
 				40BB1E6126FC90D6002EE7A9 /* WebRecipeViewController.swift in Sources */,
 				407090A726FA117700E8B1DE /* RoundedButton.swift in Sources */,
 				402BFCD126E11EE300CFBE01 /* AppDelegate.swift in Sources */,
+				409A66452701D153008CB20C /* ManageFavoriteViewController.swift in Sources */,
 				40B3207026F4B5D400BF507A /* DataHelper.swift in Sources */,
 				408DFF8926E7DCE800D300C3 /* APIRequest.swift in Sources */,
 				402BFCD326E11EE300CFBE01 /* SceneDelegate.swift in Sources */,
@@ -498,7 +499,6 @@
 			files = (
 				40D54E8626E66B7F009F24EB /* ExtensionsTests.swift in Sources */,
 				408DFF8B26E7E00400D300C3 /* APIRequestTests.swift in Sources */,
-				40D54E8B26E66F54009F24EB /* RecipeTests.swift in Sources */,
 				402982A226F75C8600E5D271 /* ResponseDataMock.swift in Sources */,
 				402982A826F76B5D00E5D271 /* APIServiceTests.swift in Sources */,
 				402982A026F75B6200E5D271 /* NetworkSessionMock.swift in Sources */,

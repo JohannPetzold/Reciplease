@@ -64,16 +64,6 @@ class Recipe {
         sourceUrl = favoriteRecipe.sourceUrl ?? ""
     }
     
-    func canBeCook(with ingredients: [String]) -> Bool {
-        for ingredient in self.ingredients {
-            if !ingredients.contains(ingredient) {
-                return false
-            }
-        }
-        print("DEBUG: \(self.title) can be cook")
-        return true
-    }
-    
     // Recipe for Units Tests
     static func getTestRecipe1() -> Recipe {
         let recipe = Recipe(title: "Test", imageData: Data(), imageUrl: "test", ingredients: ["Test1", "Test2"], preparationTime: 20, score: 20, yield: 4)

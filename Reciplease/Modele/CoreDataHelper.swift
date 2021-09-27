@@ -41,7 +41,7 @@ class CoreDataHelper {
         }
     }
     
-    // Check is recipe is in database
+    // Check if recipe is in database
     func isInDatabase(recipe: Recipe, completion: (_ result: Bool) -> Void) {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
         request.predicate = NSPredicate(format: "title == %@", recipe.title)

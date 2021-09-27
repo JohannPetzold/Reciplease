@@ -25,10 +25,8 @@ class RecipeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.dataSource = self
         tableView.delegate = self
-        
         getRecipesFromIngredients()
     }
 }
@@ -82,6 +80,10 @@ extension RecipeListViewController {
             self.showListLoadingView(false)
         }
     }
+}
+
+// MARK: - Loading
+extension RecipeListViewController {
     
     private func showListLoadingView(_ state: Bool) {
         footerTableView.isHidden = !state
@@ -128,7 +130,6 @@ extension RecipeListViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-        
         cell.resetCellData()
         let recipe = recipes[indexPath.row]
         cell.configureCell(recipe: recipe) { imageData in
@@ -136,11 +137,9 @@ extension RecipeListViewController: UITableViewDataSource, UITableViewDelegate {
                 self.recipes[indexPath.row].imageData = data
             }
         }
-
         if nextUrl != nil && indexPath.row == recipes.count - 1 {
             loadMoreRecipes()
         }
-
         return cell
     }
     

@@ -24,10 +24,7 @@ class RecipeTableViewCell: UITableViewCell {
         skeletonImageView.layer.cornerRadius = 10
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-
+    // Reset cell infos and show placeholder
     func resetCellData() {
         titleLabel.text = nil
         infosLabel.text = nil
@@ -72,6 +69,7 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
     
+    // Load image from Recipe Data, from Url or from assets
     private func loadImage(from recipe: Recipe, completion: @escaping (_ image: UIImage?, _ recipeImageData: Data?) -> Void) {
         if let imageData = recipe.imageData, let image = UIImage(data: imageData) {
             completion(image, nil)

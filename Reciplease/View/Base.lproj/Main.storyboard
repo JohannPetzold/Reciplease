@@ -376,8 +376,8 @@
                                     <rect key="frame" x="0.0" y="227" width="335" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="CDJ-rF-P0Z">
-                                            <rect key="frame" x="157.5" y="15" width="20" height="20"/>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="CDJ-rF-P0Z">
+                                            <rect key="frame" x="149" y="6.5" width="37" height="37"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" name="Background2"/>
@@ -669,6 +669,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Qf-Ei-mYP">
+                                <rect key="frame" x="34.5" y="245" width="306.5" height="133.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something Went Wrong" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuX-hc-itc">
+                                        <rect key="frame" x="0.0" y="0.0" width="306.5" height="33"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="24"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Impossible to load the website" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ns8-xl-VUR">
+                                        <rect key="frame" x="0.0" y="53" width="306.5" height="30.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="Background2"/>
+                                <constraints>
+                                    <constraint firstItem="tuX-hc-itc" firstAttribute="leading" secondItem="1Qf-Ei-mYP" secondAttribute="leading" id="1E7-sZ-tzt"/>
+                                    <constraint firstItem="Ns8-xl-VUR" firstAttribute="top" secondItem="tuX-hc-itc" secondAttribute="bottom" constant="20" id="1as-Sd-0gx"/>
+                                    <constraint firstItem="tuX-hc-itc" firstAttribute="top" secondItem="1Qf-Ei-mYP" secondAttribute="top" id="7jj-fx-WE8"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ns8-xl-VUR" secondAttribute="trailing" id="ASN-6l-mAP"/>
+                                    <constraint firstAttribute="trailing" secondItem="tuX-hc-itc" secondAttribute="trailing" id="fU9-Pk-WEb"/>
+                                    <constraint firstItem="Ns8-xl-VUR" firstAttribute="leading" secondItem="1Qf-Ei-mYP" secondAttribute="leading" id="gkn-Q0-4jb"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ns8-xl-VUR" secondAttribute="bottom" constant="50" id="xdK-S8-uJb"/>
+                                </constraints>
+                            </view>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Bp-ww-N4s">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" name="Background2"/>
@@ -682,11 +709,13 @@
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rSJ-Gc-ItO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Background2"/>
                         <constraints>
                             <constraint firstItem="9hA-5H-eOd" firstAttribute="centerX" secondItem="dK3-ak-ypo" secondAttribute="centerX" id="0um-0C-ehg"/>
                             <constraint firstItem="rSJ-Gc-ItO" firstAttribute="bottom" secondItem="2Bp-ww-N4s" secondAttribute="bottom" id="4WX-WN-kXR"/>
                             <constraint firstItem="rSJ-Gc-ItO" firstAttribute="trailing" secondItem="2Bp-ww-N4s" secondAttribute="trailing" id="91I-iP-69G"/>
+                            <constraint firstItem="1Qf-Ei-mYP" firstAttribute="centerY" secondItem="dK3-ak-ypo" secondAttribute="centerY" id="Feo-zZ-Q4y"/>
+                            <constraint firstItem="1Qf-Ei-mYP" firstAttribute="centerX" secondItem="dK3-ak-ypo" secondAttribute="centerX" id="KiM-D4-6bX"/>
                             <constraint firstItem="9hA-5H-eOd" firstAttribute="centerY" secondItem="dK3-ak-ypo" secondAttribute="centerY" id="MLB-s0-iGF"/>
                             <constraint firstItem="2Bp-ww-N4s" firstAttribute="leading" secondItem="rSJ-Gc-ItO" secondAttribute="leading" id="QSp-vU-uqr"/>
                             <constraint firstItem="2Bp-ww-N4s" firstAttribute="top" secondItem="rSJ-Gc-ItO" secondAttribute="top" id="uih-jE-LGa"/>
@@ -710,6 +739,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="9hA-5H-eOd" id="9cx-Ao-Xj1"/>
+                        <outlet property="errorView" destination="1Qf-Ei-mYP" id="2EQ-ii-qSx"/>
                         <outlet property="favoriteButton" destination="Dwx-ld-jSQ" id="mKZ-0R-hgl"/>
                         <outlet property="safariButton" destination="Ib0-dt-LuG" id="p1D-iH-5l1"/>
                         <outlet property="webView" destination="2Bp-ww-N4s" id="d4W-4a-lKs"/>
@@ -770,7 +800,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tuC-w9-Pnn"/>
+        <segue reference="6PG-Kk-Fpe"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemBlueColor"/>
     <resources>

@@ -19,7 +19,6 @@ class FavoriteListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -81,7 +80,6 @@ extension FavoriteListViewController: UITableViewDataSource, UITableViewDelegate
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-        
         let recipe = favorites[indexPath.row]
         cell.configureCell(recipe: recipe) { _ in }
         return cell

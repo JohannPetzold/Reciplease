@@ -8,34 +8,37 @@
 import UIKit
 import WebKit
 
-class WebRecipeViewController: UIViewController {
+class WebRecipeViewController: ManageFavoriteViewController {
 
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var safariButton: UIBarButtonItem!
     @IBOutlet weak var favoriteButton: FavoriteBarButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
+    @IBOutlet weak var errorView: UIView!
+    
     var url: URL!
     var recipe: Recipe!
     private let dbHelper = CoreDataHelper(context: AppDelegate.viewContext)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupWebView()
-        setupSafariButton()
-        manageActivityIndicator(start: true)
+        setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupFavoriteButton()
     }
 }
 
 // MARK: - Configure
 extension WebRecipeViewController {
+    
+    private func setup() {
+        setupWebView()
+        setupSafariButton()
+        manageActivityIndicator(start: true)
+    }
     
     private func setupWebView() {
         webView.navigationDelegate = self
@@ -67,25 +70,19 @@ extension WebRecipeViewController {
     }
 }
 
-// MARK: - Favorite
+// MARK: - Error
+extension WebRecipeViewController {
+    
+    private func displayError(_ display: Bool) {
+        errorView.isHidden = !display
+    }
+}
+
+// MARK: - Manage Favorite
 extension WebRecipeViewController {
     
     @IBAction func favoriteButtonPressed(_ sender: FavoriteBarButton) {
-        manageFavorite()
-    }
-    
-    private func manageFavorite() {
-        dbHelper.isInDatabase(recipe: recipe, completion: { result in
-            if result {
-                dbHelper.deleteRecipe(recipe: recipe) { success in
-                    favoriteButton.modifyState(!success)
-                }
-            } else {
-                dbHelper.saveRecipe(recipe: recipe) { success in
-                    favoriteButton.modifyState(success)
-                }
-            }
-        })
+        manageFavorite(dbHelper: dbHelper, recipe: recipe, button: favoriteButton)
     }
 }
 
@@ -102,5 +99,11 @@ extension WebRecipeViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         manageActivityIndicator(start: false)
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        manageActivityIndicator(start: false)
+        webView.isHidden = true
+        displayError(true)
     }
 }

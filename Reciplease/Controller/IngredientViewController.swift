@@ -146,10 +146,8 @@ extension IngredientViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? IngredientTableViewCell else {
             return UITableViewCell()
         }
-        
         let ingredient = ingredients[indexPath.row]
         cell.configure(ingredient: ingredient)
-        
         return cell
     }
 }

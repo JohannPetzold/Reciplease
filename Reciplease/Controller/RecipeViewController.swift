@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: ManageFavoriteViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infosLabel: UILabel!
@@ -25,7 +25,6 @@ class RecipeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.dataSource = self
     }
     
@@ -45,7 +44,6 @@ extension RecipeViewController {
         configureIngredientsLabel()
         configureImage()
         configureViewRecipeButton()
-        
         dbHelper.isInDatabase(recipe: recipe, completion: { result in
             favoriteButton.modifyState(result)
         })
@@ -88,25 +86,11 @@ extension RecipeViewController {
     }
 }
 
-// MARK: - Favorite
+// MARK: - Manage Favorite
 extension RecipeViewController {
     
     @IBAction func favoriteButtonPressed(_ sender: FavoriteBarButton) {
-        manageFavorite()
-    }
-    
-    private func manageFavorite() {
-        dbHelper.isInDatabase(recipe: recipe, completion: { result in
-            if result {
-                dbHelper.deleteRecipe(recipe: recipe) { success in
-                    favoriteButton.modifyState(!success)
-                }
-            } else {
-                dbHelper.saveRecipe(recipe: recipe) { success in
-                    favoriteButton.modifyState(success)
-                }
-            }
-        })
+        manageFavorite(dbHelper: dbHelper, recipe: recipe, button: favoriteButton)
     }
 }
 
@@ -147,10 +131,8 @@ extension RecipeViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? IngredientTableViewCell else {
             return UITableViewCell()
         }
-
         let ingredient = recipe.detailIngredients[indexPath.row]
         cell.configure(ingredient: ingredient)
-
         return cell
     }
 }

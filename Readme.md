@@ -1,5 +1,5 @@
 # Reciplease - Find best recipe
-[![Generic badge](https://img.shields.io/badge/version-v1.0-blue?style=flat-square)](https://shields.io/) [![Generic badge]https://img.shields.io/badge/language-Swift-green?style=flat-square](https://shields.io/) [![Generic badge]https://img.shields.io/badge/platform-iOS-blue?style=flat-square](https://shields.io/) [![Generic badge]https://img.shields.io/badge/iOS-14.1%2B-green?style=flat-square](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/version-v1.0-blue?style=flat-square)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/language-Swift-green?style=flat-square)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/platform-iOS-blue?style=flat-square)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/iOS-14.1%2B-green?style=flat-square)](https://shields.io/)
 
 Reciplease is an iOS app that allow user to search for recipes using ingredients.
 

@@ -19,16 +19,14 @@ class CustomNavigationBar: UINavigationBar {
     }
 
     private func setup() {
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            let font = UIFont(name: "Avenir Medium", size: 24) ?? UIFont.systemFont(ofSize: 24)
-            appearance.titleTextAttributes = [.font: font,
-                                              .foregroundColor: UIColor.black]
-            tintColor = UIColor(named: "GreenColor1")
-            standardAppearance = appearance
-            scrollEdgeAppearance = appearance
-        }
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        let font = UIFont(name: "Avenir Medium", size: 24) ?? UIFont.systemFont(ofSize: 24)
+        appearance.titleTextAttributes = [.font: font,
+                                          .foregroundColor: UIColor.black]
+        tintColor = UIColor(named: "GreenColor1")
+        standardAppearance = appearance
+        scrollEdgeAppearance = appearance
     }
 }
